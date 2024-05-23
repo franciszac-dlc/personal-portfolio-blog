@@ -4,17 +4,38 @@ import siteMetadata from '@/data/siteMetadata'
 import { formatDate } from 'pliny/utils/formatDate'
 import NewsletterForm from 'pliny/ui/NewsletterForm'
 
+import { Authors, allAuthors } from 'contentlayer/generated'
+import { MDXLayoutRenderer } from 'pliny/mdx-components'
+import AuthorSimple from '@/layouts/AuthorSimple'
+import { coreContent } from 'pliny/utils/contentlayer'
+
 const MAX_DISPLAY = 5
 
 export default function Home({ posts }) {
+  const author = allAuthors.find((p) => p.slug === 'default-summary') as Authors
+  const mainContent = coreContent(author)
+
   return (
     <>
+
+      {/* Author Summary */}
+      <div className="divide-y divide-gray-200 dark:divide-gray-700">
+        <div className="space-y-2 pb-6 pt-6 md:space-y-5">
+          <AuthorSimple content={mainContent}>
+            <MDXLayoutRenderer code={author.body.code} />
+          </AuthorSimple>
+        </div>
+      </div>
+
+      {/* Projects */}
+
+      {/* Blog Posts */}
       <div className="divide-y divide-gray-200 dark:divide-gray-700">
         <div className="space-y-2 pb-8 pt-6 md:space-y-5">
-          <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
+          <h2 className="text-xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-3xl sm:leading-10 md:text-4xl md:leading-14">
             Latest
-          </h1>
-          <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
+          </h2>
+          <p className="text-lg leading-5 text-gray-500 dark:text-gray-400">
             {siteMetadata.description}
           </p>
         </div>
@@ -81,6 +102,8 @@ export default function Home({ posts }) {
           </Link>
         </div>
       )}
+
+      {/* Footer */}
       {siteMetadata.newsletter?.provider && (
         <div className="flex items-center justify-center pt-4">
           <NewsletterForm />
