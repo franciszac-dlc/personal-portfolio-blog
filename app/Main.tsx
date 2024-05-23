@@ -17,7 +17,6 @@ export default function Home({ posts }) {
 
   return (
     <>
-
       {/* Author Summary */}
       <div className="divide-y divide-gray-200 dark:divide-gray-700">
         <div className="space-y-2 pb-6 pt-6 md:space-y-5">

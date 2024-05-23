@@ -13,10 +13,9 @@ export default function AuthorSimple({ children, content }: Props) {
 
   return (
     <>
-      <div className="space-y-2 pt-6 pb-4 md:space-y-5">
-
+      <div className="space-y-2 pb-4 pt-6 md:space-y-5">
         {/* Image and Title */}
-        <div className="flex flex-col justify-center items-start mb-8 sm:flex-row m-auto">
+        <div className="m-auto mb-8 flex flex-col items-start justify-center sm:flex-row">
           <div className="flex flex-col pr-8">
             {/* Left side: Name, title*/}
             <h3 className="pb-2 pt-4 text-2xl font-bold leading-8 tracking-tight">{name}</h3>
@@ -44,10 +43,7 @@ export default function AuthorSimple({ children, content }: Props) {
         </div>
 
         {/* Summary */}
-        <div className="space-y-4 text-zinc-500 dark:text-slate-300 leading-loose">
-          {children}
-        </div>
-
+        <div className="space-y-4 leading-loose text-zinc-500 dark:text-slate-300">{children}</div>
       </div>
 
       {/* <div className="divide-y divide-gray-200 dark:divide-gray-700">
