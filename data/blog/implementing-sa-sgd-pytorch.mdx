@@ -1,0 +1,108 @@
+---
+title: Simulated Annealing, and implementing it in Pytorch
+date: '2024-05-24'
+tags: ['machine learning', 'research']
+draft: false
+summary: 'What simulated annealing is, as well as an implementation in Pytorch, and a way to combine it with classic Stochastic Gradient Descent.'
+---
+
+# Optimization
+
+Have you ever spent time organizing your calendar, trying to fit your tasks into neat little blocks and maximizing your productivity, or minimizing wasted time? Or perhaps you looked at your Pokemon’s stats and tried to find the best strategy to defeat the Champion? Or maybe you’re looking at the errands you have to go and do, and tried to find the best order in which to do them? You likely have, and if so then congrats! You’ve tried to *optimize* something, either by *maximizing* a value of interest, or *minimizing* it.
+
+Optimization is basically everywhere in our lives, and a lot of smart people have spent years and years on trying to find the best ways to optimize certain problems. Perhaps the easiest strategy is to simply pick the best immediate choice at the time, which is known as a *greedy strategy*. And sometimes this works! Perhaps the most popular example of this is Dijkstra’s algorithm of finding the shortest path from one vertex of a graph to another: simply choose the shortest path to any of the vertices in between, and see if going through that vertex gets you to the destination the fastest. No backtracking, no unintuitive considerations, simply just picking the smallest number at each step.
+
+Of course, sometimes this strategy doesn’t work, and you have to be a bit more clever with your solution. What if you need to visit multiple places, and you wanted to find the order of travel which minimizes the distance traveled? Well, as it turns out, you can’t use a greedy strategy for this! If you simply tried to pick the nearest place to you at each step and go there, you could end up travelling longer than if you took the time to consider all other options.
+
+> In fact, so far there is no algorithm for this that runs reasonably fast! This is called the traveling salesman problem, and it’s a perfect example of an NP-complete combinatorial problem.
+
+Well alright, let’s try simply checking *all* solutions first. Good luck, for a setup with as few as 10 places, there are up to 2**10 different orders of visit! Well, maybe we can simply try randomly selecting solutions, and seeing which ones are the best? It’s definitely a simple strategy, and you can get lucky and land on the best solution immediately. The problem is that we would have no way of systematically getting from a good solution to a *better* one. Any progress we’ve made in the past is lost the next time we roll the dice, and as we get closer to the best answer possible, finding better answers randomly gets less and less likely.
+
+In fact, this is a very common theme in optimization! Sometimes we want to randomly explore various solutions, in the hopes that we get closer to the best one. This is the *exploration* strategy. Other times, we want to use what we have and simply look at nearby solutions to see if we can slowly approach the best solution. This is the *exploitation* strategy. As it turns out, a lot of optimization strategies balance the 2 ideas!
+
+Now, let’s take a look at one such strategy, one that’s particularly cool because it involves swords… sort of.
+
+# Japanese steel, one thousand times folded
+
+> cringe intro about swords and annealing
+
+Now, some really smart people saw this phenomenon and thought, “what if we can use this strategy to solve other problems?”. What if you could first “heat up” a strategy, then slowly “cool it down” until you eventually arrive at a strong and (ideally) optimal solution? Well, that’s essentially the idea behind simulated annealing! The core idea is that at the start, you explore a lot of solutions and move around in the solution space (like a “heated up” atom), then gradually slow down your exploration until you focus in on simply looking at nearby solutions and climbing up until you find the best solution near you (like an atom that has “cooled down”). In essence, this strategy serves as a nice middle ground between the exploration strategy of choosing solutions at random, and the exploitation strategy of just looking at solutions near your current one.
+
+The algorithm goes something like this. Let’s say we want to maximize some value `F(x)` , and to do so we want to look for the best value of `x` within some solution space `S`.
+
+- Start at some temperature `T` . This hyperparameter signifies the system’s “temperature”, or likelihood that the algorithm explores other solutions it otherwise would not have done.
+- Start the algorithm at some initial candidate `x = x_0` .
+- Select a random candidate solution `x'` that’s nearby the current candidate and see if this is better than the new solution: `F(x') > F(x)`
+    - If so, then simply accept that solution as the new candidate!
+    - But if not, then we can still accept it! Remember that sometimes we want to explore new solutions we otherwise wouldn’t, however we’d want to do this primarily at the start, while the system is still “hot”. So, we calculate an *acceptance probability* based on the temperature `T` , and this is the probability with which we accept the worse candidate solution. The formula goes something like this:
+        - `Pr(x <- x') = exp((F(x') - F(x)) / T)`
+- Then, we simply repeat this, slowly “cooling down” the system by decreasing `T` as we go, until we end up at an optimal solution that we no longer transition out of.
+
+Now, this isn’t guaranteed to arrive us at the best solution, however the hope is that by exploring a lot more at the start, we are able to sample a larger portion of the solution space, and avoid getting stuck at dead ends or local optima. And as it turns out, it works rather well!
+
+> insert empirical studies about efficiency of SA on TSP
+
+# This, but neural networks
+
+Now there’s a whole lot of cool math that went into developing this algorithm, involving gas simulations and even the Manhattan project! However, for now I want to focus on a branch of the research that I stumbled across, which is how people have tried using this strategy with neural networks! (I can probably talk about the history and maths of this algorithm in a separate blog post 🙂)
+
+So just as a recap, neural networks are machine learning models that are modeled after how the neurons in the brain fire up and propagate information, leading to complex behavior and abilities such as human thought. In practice, they are used as universal function approximators, meaning that they can do just about anything that you can convert into a mathematical function, given enough data, neurons, and NVIDIA GPUs. I’ll spare the rest of the details since there are about a jimbillion blog posts talking about neural networks, however the relevant part for us is that they are also powered by optimization algorithms! The way these models actually “learn” how to do the things they do is that an algorithm tries to minimize a *loss function*, which is a measure of how much the model misses the mark in terms of its task. The solution in this case are the different weights and biases of the model, which the algorithm tweaks in response to the loss function.
+
+The most popular method of optimizing neural networks is a form of *stochastic gradient descent.* The weights of the model are updated by a method known as backpropagation, however for now we’re more interested in how it traverses the solution space in the first place. A lot of other optimization methods have been derived from SGD such as AdaGrad, RmsProp, and Adam. However, the general idea is the same: in the solution space defined by your loss function, there is always a “gradient” that points towards a better solution (usually downwards, since we’re minimizing loss). Simply move down towards the better solution! Of course, this requires that the “gradient” exists in the first place (specifically, that the loss function is differentiable). That’s why you don’t see neural networks often solving combinatorial problems like the TSP, there just isn’t a “gradient” of sorts there!
+
+This gradient descent algorithm is really powerful, because computing the gradient is oftentimes really fast and easy, and sliding down the slope of a solution space is such a simple yet effective strategy as well. However, it is not without faults. Depending on the solution space, sometimes the gradient is messy and weird! Sometimes it looks really spiky and has a lot of smaller craters or local minima that the algorithm can get stuck in.
+
+> image of spiky loss landscape
+
+And that’s where our good old friend exploration comes in! What if we can combine simulated annealing’s exploration and ability to get out of dead ends, with the effective exploitation of the gradient information in gradient descent? Then we might be able to get the best of both worlds! And in fact, some researchers have tried to do just that!
+
+# Let’s try it!
+
+Finally, we get to the part with the code! Hopefully you all weren’t bored off your minds yet, as we’re finally going to touch some code.
+
+First, let’s define a machine learning problem on which we’ll want to test our optimization strategies. For now, I picked the CIFAR10 image classification task, using a simple CNN with the following parameters:
+
+```python
+class ConvNeuralNet(nn.Module):
+    def __init__(self, num_classes):
+        super(ConvNeuralNet, self).__init__()
+        self.conv_layer1 = nn.Conv2d(in_channels=3, out_channels=32, kernel_size=3)
+        self.conv_layer2 = nn.Conv2d(in_channels=32, out_channels=32, kernel_size=3)
+        self.max_pool1 = nn.MaxPool2d(kernel_size = 2, stride = 2)
+        
+        self.conv_layer3 = nn.Conv2d(in_channels=32, out_channels=64, kernel_size=3)
+        self.conv_layer4 = nn.Conv2d(in_channels=64, out_channels=64, kernel_size=3)
+        self.max_pool2 = nn.MaxPool2d(kernel_size = 2, stride = 2)
+        
+        self.fc1_sa = nn.Linear(1600, 128)
+        self.relu1 = nn.ReLU()
+        self.fc2_sa = nn.Linear(128, num_classes)
+ 
+    def forward(self, x):
+        out = self.conv_layer1(x)
+        out = self.conv_layer2(out)
+        out = self.max_pool1(out)
+     
+        out = self.conv_layer3(out)
+        out = self.conv_layer4(out)
+        out = self.max_pool2(out)
+                
+        out = out.reshape(out.size(0), -1)
+        
+        out = self.fc1_sa(out)
+        out = self.relu1(out)
+        out = self.fc2_sa(out)
+        return out
+```
+
+This should give us a quick and easy model to optimize. First, let’s see how it performs with classical SGD.
+
+```python
+optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate, weight_decay = 0.005, momentum = 0.9)
+```
+
+When we run this for 20 epochs, we end up with the following training loss curves.
+
+> insert image here
+
+Next, we’ll see how pure simulated annealing works for this model. We don’t really expect it to perform well, however it should give us a nice idea of what a good temperature and temperature schedule should look like for our problem.
