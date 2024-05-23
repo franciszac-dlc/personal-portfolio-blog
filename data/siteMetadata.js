@@ -1,11 +1,11 @@
 /** @type {import("pliny/config").PlinyConfig } */
 const siteMetadata = {
-  title: 'Francis dela Cruz\'s Data Blog',
+  title: 'Francis\' Data Blog',
   author: 'Francis dela Cruz',
   headerTitle: 'FrancisDataBlog',
   description: 'A personal portfolio blog for all things data',
   language: 'en-us',
-  theme: 'dark', // system, dark or light
+  theme: 'system', // system, dark or light
   siteUrl: 'https://personal-portfolio-blog-three.vercel.app',
   siteRepo: 'https://github.com/franciszac-dlc/personal-portfolio-blog',
   siteLogo: '/static/images/logo.png',

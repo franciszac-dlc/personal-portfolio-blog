@@ -18,7 +18,10 @@ export default function AuthorSimple({ children, content }: Props) {
         <div className="m-auto mb-8 flex flex-col items-start justify-center sm:flex-row">
           <div className="flex flex-col pr-8">
             {/* Left side: Name, title*/}
-            <h3 className="pb-2 pt-4 text-2xl font-bold leading-8 tracking-tight">{name}</h3>
+            <h2 className="pb-2 pt-4 text-2xl font-bold leading-8 tracking-tight sm:text-3xl sm:leading-10 md:text-4xl md:leading-14">
+              {name}
+            </h2>
+            {/* <h2 className="text-xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-3xl sm:leading-10 md:text-4xl md:leading-14"> */}
             <div className="text-gray-500 dark:text-gray-400">{occupation}</div>
             <div className="text-gray-500 dark:text-gray-400">{company}</div>
             <div className="flex space-x-3 pt-6">
