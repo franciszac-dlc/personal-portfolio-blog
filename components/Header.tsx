@@ -31,7 +31,9 @@ const Header = () => {
               />
             </div>
             {typeof siteMetadata.headerTitle === 'string' ? (
-              <div className={`${josefin_sans.className} hidden h-8 text-3xl font-semibold sm:block`}>
+              <div
+                className={`${josefin_sans.className} hidden h-8 text-3xl font-semibold sm:block`}
+              >
                 {siteMetadata.headerTitle}
               </div>
             ) : (
