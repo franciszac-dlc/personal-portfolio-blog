@@ -1,11 +1,18 @@
+import { Josefin_Sans } from 'next/font/google'
+
 import siteMetadata from '@/data/siteMetadata'
 import headerNavLinks from '@/data/headerNavLinks'
-import Logo from '@/data/logo.svg'
 import Link from './Link'
 import MobileNav from './MobileNav'
 import ThemeSwitch from './ThemeSwitch'
 import SearchButton from './SearchButton'
 import Image from './Image'
+
+const josefin_sans = Josefin_Sans({
+  weight: '300',
+  subsets: ['latin'],
+  variable: '--font-josefin-sans',
+})
 
 const Header = () => {
   return (
@@ -24,7 +31,7 @@ const Header = () => {
               />
             </div>
             {typeof siteMetadata.headerTitle === 'string' ? (
-              <div className="hidden h-8 text-2xl font-semibold sm:block">
+              <div className={`${josefin_sans.className} hidden h-8 text-3xl font-semibold sm:block`}>
                 {siteMetadata.headerTitle}
               </div>
             ) : (
