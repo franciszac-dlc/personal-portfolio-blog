@@ -49,3 +49,14 @@ input:-webkit-autofill:focus {
   display: inline-block;
   vertical-align: middle;
 }
+
+.dark\:bg-teal-stripes {
+  background: repeating-linear-gradient(
+    -45deg,
+    #234e52 0px,
+    #234e52 23px,
+    #255156 24px,
+    #255156 35px,
+    #234e52 36px
+  );
+}
