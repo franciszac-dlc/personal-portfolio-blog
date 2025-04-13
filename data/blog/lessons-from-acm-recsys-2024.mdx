@@ -6,10 +6,62 @@ draft: false
 summary: 'My experience going to ACM RecSys 2024, as well as my 5 biggest takeaways from the conference talks that are relevant to my work.'
 ---
 
-insert image here
+(insert image here)
 
 So around October of last year, my masters thesis on recommender systems was accepted to the ACM RecSys 2024 conference! As a result, I was able to visit the conference at Bari, Italy. It was my first time in an academic conference, and it was honestly amazing! The food was divine, the people were intelligent and driven, and the talks made the whole thing feel like Disneyland for recommender system nerds like myself.
 
-insert picture of food here
+(insert picture of food here)
 
-My 
+Aside from the wonderful food, I thoroughly enjoyed interacting with so many industry leaders in the field, and listening to their talks gave me so much inspiration and food for thought, even outside the field itself! I can't wait to share these thoughts here, but I just want to talk about the project I presented first, as a bit of background on my experience with recommender systems.
+
+# Fairness and Point-of-Interest Recommendation
+
+My thesis, which I presented as a poster in the conference, aimed to answer 1 main question: what happens when you try to balance the consumers and producers' best interests in point-of-interest recommendation?
+
+I realize that that statement assumes a fair bit of background in the topic, so here is a quick summary of some of the terms. Point-of-interest recommendation refers to the task of suggesting places in a map, such as restaurants or stores. Google Maps is probably the biggest app that employs this type of recommendation. In this scenario, there are the people asking for recommendations and visiting places (the "consumers"), as well as the business owners of the places we suggest to users (the "producers"). The core of my thesis was to see how to try and balance their interests as best as possible, as sometimes they can be at odds with each other.
+
+(insert picture of poster here)
+
+I won't go into detail about my research as it's not the main thing I wanted to talk about, but I added it just to show my background and inclination towards topics of fairness, as well as how specific the field can get when it comes to subfields of research.
+
+---
+
+Anyway, enough about me, most of the trip for me was about learning as much as I can, not just about recommender systems, but about machine learning in general, and here are 5 things that I've learned that were the most relevant to my work!
+
+# 1. Model explainability must be aligned with user needs
+
+One of the top papers in the conference talked about algorithm intervention (in this case, recommendation), and if it changed the way that the users behave. Normally, if we want to make this intervention more explainable, we can discuss the details of how the algorithm works. However, from a human-computer interaction perspective, offering this explanation implies that the user would want to do something with that information.
+
+With that said, we can distinguish between 2 different kinds of model explanations: mechanistic explanations, which explain the inner workings of the model, and actionable explanations, which explain the rationalizations of the model's performance. The core idea is that we want to explain the model in a way that's beneficial to the end user.
+
+For instance, SHAP scores are a fairly popular way of showing feature importances for a model and/or its predictions, especially for less explainable models like boosted trees. This can be seen as a way to improve model explainability. However, when shown to the end user or audience of the predictions (i.e. the consumers of recommended items), would they be able to make sense of this information?
+
+A great example of this in action is in Netflix's recommendations, which tell you why a certain group of shows were recommended to you. With this information, you could contest the results and ignore the recommendations, or agree and discover similar shows.
+
+# 2. Use as much extra information as you can
+
+A lot of the research projects in the conference dealt with multi-modality and transfer learning. One particularly interesting project proposed a training framework that could create domain-agnostic models, which could learn recommendation patterns in one domain (e.g. books), and recommend movies in another system!
+
+The strategy that these projects employ is simple in its core: use as much information as you can, from various sources, and integrated in various ways. At first glance it makes obvious sense to use as much information as you can, but knowing which is useful and which only add noise is part of the research process. Maybe adding demographic features to your model surprisingly helps performance? Maybe it does nothing?
+
+# 3. Evaluation is tricky
+
+Model evaluation could sound like an afterthought compared to the actual model building, however it is an important and difficult part of the model development lifecycle, and it is even more so difficult for recommender systems, which deal with more complex systems of interaction. A good chunk of the papers in the conference were replicability studies, which some particularly interesting ones dealing with A/B testing these systems. The point being, choosing good metrics is **hard**.
+
+When it comes to evaluating models, there are many ways to go about it. One common distinction in the recommender system space is between offline and online evaluation. Offline evaluation refers to the testing of the model on static datasets, while online evaluation refers to the testing of the model in production environments, and measuring down-stream metrics to evaluate its performance. Each one has its pros and cons (mostly ease and cost v.s. reliability of results), and most projects use a combination of both.
+
+# 4. Try and have AI respond "empathically"
+
+One of the top papers in the conference looked into improving an LLM's recommendation response to be more empathic with the user's emotions. Their testing showed that this increased user satisfaction with the system. This may be less technical of a conclusion, however it is important in the sense that you should be considering the user's interaction with the system, and how to improve it in non-obvious ways.
+
+Even outside of recommendation, this is generally a good mindset to adopt when building AI agents and applications. Should the machine act sterile and cold? Would making it seem more empathic improve the human-computer interaction?
+
+# 5. Use data in creative ways
+
+Recommendation lends itself to some unique challenges with respect to the data used. One of the biggest ones is interaction sparsity: only a few users interact with a few items in a system, so our data wouldn't be as dense as we may want it to be. Another common one is the cold start problem: how do we recommend items to a new user if we know nothing about them?
+
+Some of the studies in the conference tried to deal with these problems in creative ways. One of my favorite papers tried to use unlabeled interaction data to improve recommendations. Think of unlabeled interactions as you watching Netflix shows without rating the show after. The mere fact that you watched or maybe even finished the show already tells the system something!
+
+---
+
+Anyway, those are the lessons I took away from the conference! I really loved how these takeaways are applicable even outside the field of recommender systems. All in all, the conference was a very unique and enjoyable experience, and I'm very thankful to my professors and co-researchers to helping me throughout this journey.
