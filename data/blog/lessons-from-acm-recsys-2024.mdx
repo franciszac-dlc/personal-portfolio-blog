@@ -8,37 +8,45 @@ summary: 'My experience going to ACM RecSys 2024, as well as my 5 biggest takeaw
 
 ![Picture of the ACM RecSys 2024 stage](/static/images/recsys2024/stage.jpg)
 
-So around October of last year, my masters thesis on recommender systems was accepted to the ACM RecSys 2024 conference! As a result, I was able to visit the conference at Bari, Italy. It was my first time in an academic conference, and it was honestly amazing! The food was divine, the people were intelligent and driven, and the talks made the whole thing feel like Disneyland for recommender system nerds like myself.
+So around October of last year, my masters thesis on recommender systems was accepted into the ACM RecSys 2024 conference! As a result, I was able to visit the conference at Bari, Italy. It was my first time in an academic conference, and it was honestly amazing! The food was divine, the people were intelligent and driven, and the talks made the whole thing feel like Disneyland for recommender system nerds like myself.
 
 ![Picture of an octopus burger](/static/images/recsys2024/food.jpg)
 
-Aside from the wonderful food, I thoroughly enjoyed interacting with so many industry leaders in the field, and listening to their talks gave me so much inspiration and food for thought, even outside the field itself! I can't wait to share these thoughts here, but I just want to talk about the project I presented first, as a bit of background on my experience with recommender systems.
+Aside from the wonderful cuisine, I thoroughly enjoyed interacting with so many industry leaders in the field, and listening to their talks gave me so many ideas and taught me so many lessons, even outside the field itself! I can't wait to share these lessons here, but I just want to talk about the project I presented first, as a bit of background on my experience with recommender systems.
 
 # Fairness and Point-of-Interest Recommendation
 
+![Self-picture with my research poster](/static/images/recsys2024/poster.jpg)
+
 My thesis, which I presented as a poster in the conference, aimed to answer 1 main question: what happens when you try to balance the consumers and producers' best interests in point-of-interest recommendation?
 
-I realize that that statement assumes a fair bit of background in the topic, so here is a quick summary of some of the terms. Point-of-interest recommendation refers to the task of suggesting places in a map, such as restaurants or stores. Google Maps is probably the biggest app that employs this type of recommendation. In this scenario, there are the people asking for recommendations and visiting places (the "consumers"), as well as the business owners of the places we suggest to users (the "producers"). The core of my thesis was to see how to try and balance their interests as best as possible, as sometimes they can be at odds with each other.
+I realize that that statement assumes a fair bit of background in the topic, so here is a quick summary of some of the terms:
 
-![Self-picture with my research poster](/static/images/recsys2024/poster.jpg)
+* Point-of-interest recommendation refers to the task of suggesting places in a map, such as restaurants or stores. Google Maps is probably the biggest app that employs this type of recommendation.
+* In this scenario, there are the people asking for recommendations and visiting places (the "consumers"), as well as the business owners of the places we suggest to users (the "producers").
+* The core of my thesis was to see how to try and balance their interests as best as possible, as sometimes they can be at odds with each other.
 
 I won't go into detail about my research as it's not the main thing I wanted to talk about, but I added it just to show my background and inclination towards topics of fairness, as well as how specific the field can get when it comes to subfields of research.
 
 ---
 
-Anyway, enough about me, most of the trip for me was about learning as much as I can, not just about recommender systems, but about machine learning in general, and here are 5 things that I've learned that were the most relevant to my work!
+Anyway, most of the trip for me was about learning as much as I can, not just about recommender systems, but about machine learning in general, and here are 5 things that I've learned that were the most relevant to my work!
 
 # 1. Model explainability must be aligned with user needs
 
 ![A picture of the keynote speaker with the summary](/static/images/recsys2024/item1_keynote.jpg)
 
-The very first keynote speaker was Mark Riedl, and he human-centered AI. He framed AI as a kind of algorithm intervention (in this case, recommendation), and discussed how it changed the way that the audience or users behave. Normally, if we want to make this intervention more explainable, we can discuss the details of how the algorithm works. However, from a human-computer interaction perspective, offering this explanation implies that the user would want to do something with that information.
+The very first keynote speaker was Mark Riedl, and he gave a talk about human-centered AI. He framed AI models as a kind of algorithmic intervention, and discussed how it changed the way that the audience or users behave. Normally, if we want to make this intervention more explainable, we can discuss the details of how the model works. However, from a human-computer interaction perspective, offering this explanation implies that the user would want to do something with that information. Thus, the core idea he wanted to share was that we want to explain the model in a way that's beneficial to the end user.
 
-With that said, we can distinguish between 2 different kinds of model explanations: mechanistic explanations, which explain the inner workings of the model, and actionable explanations, which explain the rationalizations of the model's performance. The core idea is that we want to explain the model in a way that's beneficial to the end user.
+With that said, we can distinguish between 2 different kinds of model explanations:
+* **Mechanistic explanations**, which explain the inner workings of the model
+* **Actionable explanations**, which explain the rationalizations of the model's performance
 
 For instance, SHAP scores are a fairly popular way of showing feature importances for a model and/or its predictions, especially for less explainable models like boosted trees. This can be seen as a way to improve model explainability. However, when shown to the end user or audience of the predictions (i.e. the consumers of recommended items), would they be able to make sense of this information?
 
 A great example of this in action is in Netflix's recommendations, which tell you why a certain group of shows were recommended to you. With this information, you could contest the results and ignore the recommendations, or agree and discover similar shows.
+
+![Netflix recommendations](/static/images/recsys2024/recomms.webp)
 
 # 2. Use as much extra information as you can
 
@@ -74,4 +82,10 @@ Some of the studies in the conference tried to deal with these problems in creat
 
 ---
 
-Anyway, those are the lessons I took away from the conference! I really loved how these takeaways are applicable even outside the field of recommender systems. All in all, the conference was a very unique and enjoyable experience, and I'm very thankful to my professors and co-researchers to helping me throughout this journey.
+Those are some of the lessons I took away from the conference! I really loved how these takeaways are applicable even outside the field of recommender systems. All in all, the conference was a very unique and enjoyable experience, and I'm very thankful to my professors and co-researchers to helping me throughout this journey. Here are the studies I mentioned in this blog post, including our own!
+
+* [CAPRI-FAIR: Integration of Multi-sided Fairness in Contextual POI Recommendation Framework](https://dl.acm.org/doi/10.1145/3640457.3688170)
+* [beeFormer: Bridging the Gap Between Semantic and Interaction Similarity in Recommender Systems](https://dl.acm.org/doi/10.1145/3640457.3691707)
+* [Reproducing Popularity Bias in Recommendation: The Effect of Evaluation Strategies](https://dl.acm.org/doi/10.1145/3637066)
+* [Towards Empathetic Conversational Recommender Systems](https://dl.acm.org/doi/10.1145/3640457.3688133)
+* [Unlocking the Hidden Treasures: Enhancing Recommendations with Unlabeled Data](https://dl.acm.org/doi/10.1145/3640457.3688149)
